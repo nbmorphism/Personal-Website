@@ -1,5 +1,5 @@
 import Background from "../background";
 
 export default function ResearchInterests() {
-  return <Background />;
+  return <Background activePath="/research-interests" />;
 }

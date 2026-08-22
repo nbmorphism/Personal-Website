@@ -1,5 +1,5 @@
 import Background from "./background";
 
 export default function Home() {
-  return <Background />;
+  return <Background activePath="/" showDescription />;
 }

@@ -1,5 +1,5 @@
 import Background from "../background";
 
 export default function Publications() {
-  return <Background />;
+  return <Background activePath="/publications" />;
 }
