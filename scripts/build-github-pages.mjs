@@ -1,4 +1,4 @@
-import { copyFile, mkdir, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -8,16 +8,49 @@ const repositoryName = (process.env.GITHUB_REPOSITORY ?? "nbmorphism/Personal-We
   .split("/")
   .at(-1);
 const basePath = `/${repositoryName}/`;
+
 const routes = [
-  "",
-  "research-interests",
-  "publications",
-  "notes-talks",
-  "cv",
-  "persona",
+  { path: "", label: "Home", angle: "-4deg", shift: "0rem" },
+  {
+    path: "research-interests",
+    label: "Research Interests",
+    angle: "2.8deg",
+    shift: "0.7rem",
+  },
+  {
+    path: "publications",
+    label: "Publications",
+    angle: "-2.5deg",
+    shift: "0.15rem",
+  },
+  {
+    path: "notes-talks",
+    label: "Notes & Talks",
+    angle: "3.6deg",
+    shift: "0.9rem",
+  },
+  {
+    path: "personae",
+    label: "Personae",
+    angle: "-3.1deg",
+    shift: "0.3rem",
+  },
+  { path: "cv", label: "CV", angle: "2.5deg", shift: "1.1rem" },
 ];
 
-const html = `<!doctype html>
+const navigation = routes
+  .map(
+    ({ path, label, angle, shift }) => `
+          <li class="page-menu__item" style="--menu-angle:${angle};--menu-shift:${shift}">
+            <a class="page-menu__link" href="${path ? `${path}/` : "./"}" data-route="${path}">
+              <span class="page-menu__triangle-shadow" aria-hidden="true"></span>
+              <span class="page-menu__label">${label}</span>
+            </a>
+          </li>`,
+  )
+  .join("");
+
+const html = (route) => `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -26,35 +59,63 @@ const html = `<!doctype html>
     <base href="${basePath}">
     <title>Personal Website</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <style>
-      :root { background: #fff; }
-      html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #fff; }
-      main { position: fixed; inset: 0; overflow: hidden; background: #fff; }
-      video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    </style>
+    <link rel="stylesheet" href="site.css">
+    <script src="site.js" defer></script>
   </head>
-  <body>
-    <main aria-label="Animated site background">
-      <video autoplay loop muted playsinline preload="auto" aria-hidden="true">
+  <body data-route="${route}">
+    <main class="background" aria-label="Animated site background">
+      <video class="background__video" autoplay loop muted playsinline preload="auto" aria-hidden="true">
         <source src="background.mp4" type="video/mp4">
       </video>
+
+      <nav class="page-menu" aria-label="Primary navigation">
+        <ul class="page-menu__list">${navigation}
+        </ul>
+      </nav>
+
+      <section class="self-description" aria-labelledby="about-heading">
+        <p class="self-description__eyebrow">About me</p>
+        <h1 id="about-heading">A student of mathematics</h1>
+        <div class="self-description__body">
+          <p>I am interested in algebraic geometry and arithmetic geometry.</p>
+          <p>My current work explores étale cohomology and the cohomological structures behind exponential sums.</p>
+        </div>
+      </section>
     </main>
+
+    <div class="page-transition" aria-hidden="true">
+      <span class="page-transition__plane page-transition__plane--blue"></span>
+      <span class="page-transition__plane page-transition__plane--white"></span>
+      <span class="page-transition__plane page-transition__plane--purple"></span>
+      <span class="page-transition__plane page-transition__plane--ink"></span>
+    </div>
   </body>
 </html>
 `;
 
 await rm(output, { recursive: true, force: true });
-await mkdir(output, { recursive: true });
+await mkdir(join(output, "fonts"), { recursive: true });
 await copyFile(join(root, "public", "background.mp4"), join(output, "background.mp4"));
 await copyFile(join(root, "public", "favicon.svg"), join(output, "favicon.svg"));
+await copyFile(
+  join(root, "public", "fonts", "noto-serif-regular.woff2"),
+  join(output, "fonts", "noto-serif-regular.woff2"),
+);
+await copyFile(join(root, "scripts", "github-pages", "site.css"), join(output, "site.css"));
+await copyFile(join(root, "scripts", "github-pages", "site.js"), join(output, "site.js"));
 await writeFile(join(output, ".nojekyll"), "");
 
-for (const route of routes) {
-  const directory = join(output, route);
+for (const { path } of routes) {
+  const directory = join(output, path);
   await mkdir(directory, { recursive: true });
-  await writeFile(join(directory, "index.html"), html);
+  await writeFile(join(directory, "index.html"), html(path));
 }
 
-await writeFile(join(output, "404.html"), html);
+await writeFile(join(output, "404.html"), html(""));
 
-console.log(`Generated ${routes.length} routes in ${output}`);
+const generatedCss = await readFile(join(output, "site.css"), "utf8");
+if (!generatedCss.includes("page-menu__triangle-shadow")) {
+  throw new Error("The generated stylesheet is incomplete.");
+}
+
+console.log(`Generated ${routes.length} complete routes in ${output}`);
