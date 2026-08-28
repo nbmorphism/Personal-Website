@@ -1,12 +1,31 @@
 const transition = document.querySelector(".page-transition");
 const description = document.querySelector(".self-description");
 const links = [...document.querySelectorAll(".page-menu__link")];
+const lines = document.querySelector(".page-transition__lines");
 let transitioning = false;
 
+[
+  ["8%", "-8deg", "45ms"],
+  ["19%", "5deg", "100ms"],
+  ["31%", "-3deg", "15ms"],
+  ["44%", "10deg", "125ms"],
+  ["56%", "-6deg", "70ms"],
+  ["68%", "3deg", "155ms"],
+  ["80%", "-11deg", "30ms"],
+  ["91%", "7deg", "95ms"],
+].forEach(([y, angle, delay]) => {
+  const line = document.createElement("span");
+  line.className = "page-transition__line";
+  line.style.setProperty("--line-y", y);
+  line.style.setProperty("--line-angle", angle);
+  line.style.setProperty("--line-delay", delay);
+  lines.append(line);
+});
+
 function routeFromLocation() {
-  const base = new URL(document.baseURI).pathname.replace(/^\/|\/$/g, "");
-  const path = window.location.pathname.replace(/^\/|\/$/g, "");
-  return path === base ? "" : path.slice(base.length).replace(/^\/|\/$/g, "");
+  const base = new URL(document.baseURI).pathname.replace(/^\\/|\\/$/g, "");
+  const path = window.location.pathname.replace(/^\\/|\\/$/g, "");
+  return path === base ? "" : path.slice(base.length).replace(/^\\/|\\/$/g, "");
 }
 
 function renderRoute(route) {
@@ -14,11 +33,8 @@ function renderRoute(route) {
   description.hidden = route !== "";
 
   for (const link of links) {
-    if (link.dataset.route === route) {
-      link.setAttribute("aria-current", "page");
-    } else {
-      link.removeAttribute("aria-current");
-    }
+    link.toggleAttribute("aria-current", link.dataset.route === route);
+    if (link.dataset.route === route) link.setAttribute("aria-current", "page");
   }
 }
 
@@ -30,28 +46,26 @@ for (const link of links) {
       event.ctrlKey ||
       event.shiftKey ||
       event.altKey
-    ) {
-      return;
-    }
+    ) return;
 
     event.preventDefault();
     const route = link.dataset.route ?? "";
-    if (transitioning || route === document.body.dataset.route) {
-      return;
-    }
+    if (transitioning || route === document.body.dataset.route) return;
 
     transitioning = true;
+    transition.style.setProperty("--transition-x", `${event.clientX}px`);
+    transition.style.setProperty("--transition-y", `${event.clientY}px`);
     transition.classList.add("page-transition--active");
 
     window.setTimeout(() => {
       window.history.pushState({}, "", link.href);
       renderRoute(route);
-    }, 360);
+    }, 320);
 
     window.setTimeout(() => {
       transition.classList.remove("page-transition--active");
       transitioning = false;
-    }, 880);
+    }, 820);
   });
 }
 
