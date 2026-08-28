@@ -8,6 +8,7 @@ const repositoryName = (process.env.GITHUB_REPOSITORY ?? "nbmorphism/Personal-We
   .split("/")
   .at(-1);
 const basePath = `/${repositoryName}/`;
+const assetVersion = (process.env.GITHUB_SHA ?? "local").slice(0, 12);
 
 const routes = [
   { path: "", label: "Home", angle: "-4deg", shift: "0rem", rise: "0rem" },
@@ -63,8 +64,8 @@ const html = (route) => `<!doctype html>
     <base href="${basePath}">
     <title>Personal Website</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="site.css">
-    <script src="site.js" defer></script>
+    <link rel="stylesheet" href="site.css?v=${assetVersion}">
+    <script src="site.js?v=${assetVersion}" defer></script>
   </head>
   <body data-route="${route}">
     <main class="background" aria-label="Animated site background">
