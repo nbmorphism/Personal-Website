@@ -10,38 +10,42 @@ const repositoryName = (process.env.GITHUB_REPOSITORY ?? "nbmorphism/Personal-We
 const basePath = `/${repositoryName}/`;
 
 const routes = [
-  { path: "", label: "Home", angle: "-4deg", shift: "0rem" },
+  { path: "", label: "Home", angle: "-4deg", shift: "0rem", rise: "0rem" },
   {
     path: "research-interests",
     label: "Research Interests",
     angle: "2.8deg",
     shift: "0.7rem",
+    rise: "0.24rem",
   },
   {
     path: "publications",
     label: "Publications",
     angle: "-2.5deg",
     shift: "0.15rem",
+    rise: "-0.14rem",
   },
   {
     path: "notes-talks",
     label: "Notes & Talks",
     angle: "3.6deg",
     shift: "0.9rem",
+    rise: "0.24rem",
   },
   {
     path: "personae",
     label: "Personae",
     angle: "-3.1deg",
     shift: "0.3rem",
+    rise: "0rem",
   },
-  { path: "cv", label: "CV", angle: "2.5deg", shift: "1.1rem" },
+  { path: "cv", label: "CV", angle: "2.5deg", shift: "1.1rem", rise: "0rem" },
 ];
 
 const navigation = routes
   .map(
-    ({ path, label, angle, shift }) => `
-          <li class="page-menu__item" style="--menu-angle:${angle};--menu-shift:${shift}">
+    ({ path, label, angle, shift, rise }) => `
+          <li class="page-menu__item" style="--menu-angle:${angle};--menu-shift:${shift};--menu-rise:${rise}">
             <a class="page-menu__link" href="${path ? `${path}/` : "./"}" data-route="${path}">
               <span class="page-menu__triangle-shadow" aria-hidden="true"></span>
               <span class="page-menu__label">${label}</span>
@@ -64,9 +68,11 @@ const html = (route) => `<!doctype html>
   </head>
   <body data-route="${route}">
     <main class="background" aria-label="Animated site background">
-      <video class="background__video" autoplay loop muted playsinline preload="auto" aria-hidden="true">
-        <source src="background.mp4" type="video/mp4">
-      </video>
+      <div class="background__water" aria-hidden="true">
+        <video class="background__video" autoplay loop muted playsinline preload="auto">
+          <source src="background.mp4" type="video/mp4">
+        </video>
+      </div>
 
       <nav class="page-menu" aria-label="Primary navigation">
         <ul class="page-menu__list">${navigation}
@@ -84,10 +90,8 @@ const html = (route) => `<!doctype html>
     </main>
 
     <div class="page-transition" aria-hidden="true">
-      <span class="page-transition__plane page-transition__plane--blue"></span>
-      <span class="page-transition__plane page-transition__plane--white"></span>
-      <span class="page-transition__plane page-transition__plane--purple"></span>
-      <span class="page-transition__plane page-transition__plane--ink"></span>
+      <span class="page-transition__cyan"></span>
+      <span class="page-transition__lines"></span>
     </div>
   </body>
 </html>
