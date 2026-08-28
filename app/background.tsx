@@ -8,32 +8,36 @@ import {
 import { PAGE_TRANSITION_EVENT } from "./page-transition";
 
 const navigation = [
-  { href: "/", label: "Home", angle: "-4deg", shift: "0rem" },
+  { href: "/", label: "Home", angle: "-4deg", shift: "0rem", rise: "0rem" },
   {
     href: "/research-interests",
     label: "Research Interests",
     angle: "2.8deg",
     shift: "0.7rem",
+    rise: "0.24rem",
   },
   {
     href: "/publications",
     label: "Publications",
     angle: "-2.5deg",
     shift: "0.15rem",
+    rise: "-0.14rem",
   },
   {
     href: "/notes-talks",
     label: "Notes & Talks",
     angle: "3.6deg",
     shift: "0.9rem",
+    rise: "0.24rem",
   },
   {
     href: "/personae",
     label: "Personae",
     angle: "-3.1deg",
     shift: "0.3rem",
+    rise: "0rem",
   },
-  { href: "/cv", label: "CV", angle: "2.5deg", shift: "1.1rem" },
+  { href: "/cv", label: "CV", angle: "2.5deg", shift: "1.1rem", rise: "0rem" },
 ] as const;
 
 type BackgroundProps = {
@@ -64,23 +68,26 @@ export default function Background({
 
     event.preventDefault();
     window.dispatchEvent(
-      new CustomEvent(PAGE_TRANSITION_EVENT, { detail: { href } }),
+      new CustomEvent(PAGE_TRANSITION_EVENT, {
+        detail: { href, x: event.clientX, y: event.clientY },
+      }),
     );
   };
 
   return (
     <main className="background" aria-label="Animated site background">
-      <video
-        className="background__video"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-      >
-        <source src="/background.mp4" type="video/mp4" />
-      </video>
+      <div className="background__water" aria-hidden="true">
+        <video
+          className="background__video"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       <nav className="page-menu" aria-label="Primary navigation">
         <ul className="page-menu__list">
@@ -94,6 +101,7 @@ export default function Background({
                 style={{
                   "--menu-angle": item.angle,
                   "--menu-shift": item.shift,
+                  "--menu-rise": item.rise,
                 } as CSSProperties}
               >
                 <Link
