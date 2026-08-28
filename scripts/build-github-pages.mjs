@@ -37,9 +37,9 @@ const routes = [
     label: "Personae",
     angle: "-3.1deg",
     shift: "0.3rem",
-    rise: "0rem",
+    rise: "-0.16rem",
   },
-  { path: "cv", label: "CV", angle: "2.5deg", shift: "1.1rem", rise: "0rem" },
+  { path: "cv", label: "CV", angle: "-2deg", shift: "1.1rem", rise: "0rem" },
 ];
 
 const navigation = routes

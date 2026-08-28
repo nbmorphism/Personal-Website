@@ -23,9 +23,9 @@ let transitioning = false;
 });
 
 function routeFromLocation() {
-  const base = new URL(document.baseURI).pathname.replace(/^\\/|\\/$/g, "");
-  const path = window.location.pathname.replace(/^\\/|\\/$/g, "");
-  return path === base ? "" : path.slice(base.length).replace(/^\\/|\\/$/g, "");
+  const base = new URL(document.baseURI).pathname.replace(/^\/|\/$/g, "");
+  const path = window.location.pathname.replace(/^\/|\/$/g, "");
+  return path === base ? "" : path.slice(base.length).replace(/^\/|\/$/g, "");
 }
 
 function renderRoute(route) {
@@ -53,8 +53,10 @@ for (const link of links) {
     if (transitioning || route === document.body.dataset.route) return;
 
     transitioning = true;
-    transition.style.setProperty("--transition-x", `${event.clientX}px`);
-    transition.style.setProperty("--transition-y", `${event.clientY}px`);
+    const originX = `${event.clientX}px`;
+    const originY = `${event.clientY}px`;
+    transition.style.setProperty("--transition-x", originX);
+    transition.style.setProperty("--transition-y", originY);
     transition.classList.add("page-transition--active");
 
     window.setTimeout(() => {

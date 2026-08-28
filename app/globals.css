@@ -242,13 +242,26 @@ body {
   }
 
   .background__water {
-    top: var(--mobile-menu-height);
+    top: calc(var(--mobile-menu-height) - clamp(3rem, 10vw, 5rem));
+    bottom: 0;
     overflow: hidden;
     background: var(--water-accent);
+    -webkit-clip-path: polygon(
+      0 clamp(5rem, 16vw, 8rem),
+      100% 0,
+      100% 100%,
+      0 100%
+    );
+    clip-path: polygon(
+      0 clamp(5rem, 16vw, 8rem),
+      100% 0,
+      100% 100%,
+      0 100%
+    );
   }
 
   .background__video {
-    object-position: 76% center;
+    object-position: 100% center;
   }
 
   .page-menu {
@@ -289,16 +302,17 @@ body {
     top: auto;
     right: auto;
     z-index: 2;
-    width: min(84vw, 34rem);
-    min-height: max(42svh, 25rem);
+    width: min(82vw, 34rem);
+    min-height: max(50svh, 30rem);
     height: auto;
     margin: 0 auto;
     justify-content: center;
-    padding: clamp(2.5rem, 9vw, 4rem) 0;
+    padding: clamp(5rem, 16vw, 8rem) 0
+      clamp(3rem, 10vw, 5rem) clamp(1rem, 4vw, 1.5rem);
     transform: none;
-    border-top: 0.16rem solid rgba(255, 255, 255, 0.78);
-    border-left: 0;
-    text-align: center;
+    border-top: 0;
+    border-left: 0.16rem solid rgba(255, 255, 255, 0.78);
+    text-align: left;
   }
 
   .self-description__body {
@@ -338,3 +352,23 @@ body {
   animation: cyan-burst 820ms cubic-bezier(0.63, 0, 0.2, 1) both;
 }
 
+.page-transition__lines {
+  position: absolute;
+  inset: -20%;
+  overflow: hidden;
+}
+
+.page-transition__line {
+  position: absolute;
+  top: var(--line-y);
+  left: -16%;
+  width: 132%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.93);
+  opacity: 0;
+  transform: rotate(var(--line-angle)) scaleX(0);
+  transform-origin: var(--transition-x, 50%) var(--transition-y, 50%);
+  will-change: transform, opacity;
+}
+
+.page-transition--active .page-transition__line {
