@@ -245,29 +245,58 @@ body {
 .page-transition__line {
   position: absolute;
   top: var(--line-y);
-  left: -10%;
-  width: 120%;
+  left: -16%;
+  width: 132%;
   height: 1px;
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.93);
   opacity: 0;
-  transform: rotate(var(--line-angle));
-  transform-origin: center;
+  transform: rotate(var(--line-angle)) scaleX(0);
+  transform-origin: var(--transition-x, 50%) var(--transition-y, 50%);
+  will-change: transform, opacity;
 }
 
 .page-transition--active .page-transition__line {
-  animation: cyan-line 360ms ease-out var(--line-delay) both;
+  animation: cyan-line 630ms cubic-bezier(0.2, 0.8, 0.24, 1) var(--line-delay) both;
 }
 
 @keyframes cyan-burst {
-  0% { clip-path: circle(0 at var(--transition-x, 50%) var(--transition-y, 50%)); }
-  62% { clip-path: circle(150vmax at var(--transition-x, 50%) var(--transition-y, 50%)); }
-  100% { clip-path: circle(150vmax at var(--transition-x, 50%) var(--transition-y, 50%)); opacity: 0; }
+  0% {
+    clip-path: circle(0 at var(--transition-x, 50%) var(--transition-y, 50%));
+    opacity: 1;
+  }
+  42%,
+  67% {
+    clip-path: circle(150vmax at var(--transition-x, 50%) var(--transition-y, 50%));
+    opacity: 1;
+  }
+  100% {
+    clip-path: circle(150vmax at var(--transition-x, 50%) var(--transition-y, 50%));
+    opacity: 0;
+  }
 }
 
 @keyframes cyan-line {
-  0% { opacity: 0; transform: translateX(-18%) rotate(var(--line-angle)); }
-  35% { opacity: 0.95; }
-  100% { opacity: 0; transform: translateX(18%) rotate(var(--line-angle)); }
+  0%,
+  8% {
+    opacity: 0;
+    transform: rotate(var(--line-angle)) scaleX(0);
+  }
+  24%,
+  64% {
+    opacity: 1;
+    transform: rotate(var(--line-angle)) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--line-angle)) scaleX(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition--active .page-transition__cyan,
+  .page-transition--active .page-transition__line {
+    animation-duration: 1ms;
+  }
 }
 
 @media (max-width: 900px) {
@@ -291,10 +320,6 @@ body {
   .page-menu__link,
   .page-menu__triangle-shadow {
     transition: none;
-  }
-
-  .page-transition--active .page-transition__plane {
-    animation-duration: 1ms;
   }
 }
 
