@@ -69,6 +69,14 @@ const html = (route) => `<!doctype html>
   </head>
   <body data-route="${route}">
     <main class="background" aria-label="Animated site background">
+      <svg class="boundary-defs" aria-hidden="true">
+        <defs>
+          <clipPath id="mobile-white-boundary" clipPathUnits="objectBoundingBox">
+            <path d="M0 0 H1 V0.88 C0.72 0.86 0.38 0.77 0 0.76 Z"></path>
+          </clipPath>
+        </defs>
+      </svg>
+
       <div class="background__water" aria-hidden="true">
         <video class="background__video" autoplay loop muted playsinline preload="auto">
           <source src="background.mp4" type="video/mp4">
@@ -81,11 +89,13 @@ const html = (route) => `<!doctype html>
       </nav>
 
       <section class="self-description" aria-labelledby="about-heading">
-        <p class="self-description__eyebrow">About me</p>
-        <h1 id="about-heading">A student of mathematics</h1>
-        <div class="self-description__body">
-          <p>I am interested in algebraic geometry and arithmetic geometry.</p>
-          <p>My current work explores étale cohomology and the cohomological structures behind exponential sums.</p>
+        <div class="self-description__inner">
+          <p class="self-description__eyebrow">About me</p>
+          <h1 id="about-heading">A student of mathematics</h1>
+          <div class="self-description__body">
+            <p>I am interested in algebraic geometry and arithmetic geometry.</p>
+            <p>My current work explores étale cohomology and the cohomological structures behind exponential sums.</p>
+          </div>
         </div>
       </section>
     </main>

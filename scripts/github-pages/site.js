@@ -1,5 +1,59 @@
+const pageContent = {
+  "": {
+    eyebrow: "About me",
+    title: "A student of mathematics",
+    paragraphs: [
+      "I am interested in algebraic geometry and arithmetic geometry.",
+      "My current work explores étale cohomology and the cohomological structures behind exponential sums.",
+    ],
+  },
+  "research-interests": {
+    eyebrow: "Research",
+    title: "Research Interests",
+    paragraphs: [
+      "My interests lie in algebraic geometry and arithmetic geometry.",
+      "I am currently studying étale cohomology, exponential sums, and the geometry of twisted Kloosterman moments.",
+    ],
+  },
+  publications: {
+    eyebrow: "Writing",
+    title: "Publications",
+    paragraphs: [
+      "Research papers and related writing will be collected on this page.",
+      "Full bibliographic details and links will be added as the work becomes available.",
+    ],
+  },
+  "notes-talks": {
+    eyebrow: "Exposition",
+    title: "Notes & Talks",
+    paragraphs: [
+      "Expository notes, seminar materials, and slides will be collected here.",
+      "Each entry will include a short description and a link to the corresponding file.",
+    ],
+  },
+  personae: {
+    eyebrow: "Personae",
+    title: "People & Perspectives",
+    paragraphs: [
+      "This page is reserved for the people, voices, and mathematical perspectives that shape my work.",
+      "Profiles and related reflections will be added here.",
+    ],
+  },
+  cv: {
+    eyebrow: "Curriculum Vitae",
+    title: "CV",
+    paragraphs: [
+      "Education, research experience, teaching, and academic activities will be presented here.",
+      "A downloadable curriculum vitae will be added when the details are ready.",
+    ],
+  },
+};
+
 const transition = document.querySelector(".page-transition");
 const description = document.querySelector(".self-description");
+const eyebrow = description.querySelector(".self-description__eyebrow");
+const heading = description.querySelector("h1");
+const body = description.querySelector(".self-description__body");
 const links = [...document.querySelectorAll(".page-menu__link")];
 const lines = document.querySelector(".page-transition__lines");
 let transitioning = false;
@@ -29,8 +83,17 @@ function routeFromLocation() {
 }
 
 function renderRoute(route) {
+  const content = pageContent[route] ?? pageContent[""];
   document.body.dataset.route = route;
-  description.hidden = route !== "";
+  eyebrow.textContent = content.eyebrow;
+  heading.textContent = content.title;
+  body.replaceChildren(
+    ...content.paragraphs.map((text) => {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = text;
+      return paragraph;
+    }),
+  );
 
   for (const link of links) {
     link.toggleAttribute("aria-current", link.dataset.route === route);

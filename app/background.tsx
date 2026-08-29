@@ -40,15 +40,64 @@ const navigation = [
   { href: "/cv", label: "CV", angle: "-2deg", shift: "1.1rem", rise: "0rem" },
 ] as const;
 
+const pageContent = {
+  "/": {
+    eyebrow: "About me",
+    title: "A student of mathematics",
+    paragraphs: [
+      "I am interested in algebraic geometry and arithmetic geometry.",
+      "My current work explores étale cohomology and the cohomological structures behind exponential sums.",
+    ],
+  },
+  "/research-interests": {
+    eyebrow: "Research",
+    title: "Research Interests",
+    paragraphs: [
+      "My interests lie in algebraic geometry and arithmetic geometry.",
+      "I am currently studying étale cohomology, exponential sums, and the geometry of twisted Kloosterman moments.",
+    ],
+  },
+  "/publications": {
+    eyebrow: "Writing",
+    title: "Publications",
+    paragraphs: [
+      "Research papers and related writing will be collected on this page.",
+      "Full bibliographic details and links will be added as the work becomes available.",
+    ],
+  },
+  "/notes-talks": {
+    eyebrow: "Exposition",
+    title: "Notes & Talks",
+    paragraphs: [
+      "Expository notes, seminar materials, and slides will be collected here.",
+      "Each entry will include a short description and a link to the corresponding file.",
+    ],
+  },
+  "/personae": {
+    eyebrow: "Personae",
+    title: "People & Perspectives",
+    paragraphs: [
+      "This page is reserved for the people, voices, and mathematical perspectives that shape my work.",
+      "Profiles and related reflections will be added here.",
+    ],
+  },
+  "/cv": {
+    eyebrow: "Curriculum Vitae",
+    title: "CV",
+    paragraphs: [
+      "Education, research experience, teaching, and academic activities will be presented here.",
+      "A downloadable curriculum vitae will be added when the details are ready.",
+    ],
+  },
+} as const;
+
 type BackgroundProps = {
   activePath: string;
   showDescription?: boolean;
 };
 
-export default function Background({
-  activePath,
-  showDescription = false,
-}: BackgroundProps) {
+export default function Background({ activePath }: BackgroundProps) {
+  const content = pageContent[activePath as keyof typeof pageContent] ?? pageContent["/"];
   const followLink = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (
       event.defaultPrevented ||
@@ -76,6 +125,14 @@ export default function Background({
 
   return (
     <main className="background" aria-label="Animated site background">
+      <svg className="boundary-defs" aria-hidden="true">
+        <defs>
+          <clipPath id="mobile-white-boundary" clipPathUnits="objectBoundingBox">
+            <path d="M0 0 H1 V0.88 C0.72 0.86 0.38 0.77 0 0.76 Z" />
+          </clipPath>
+        </defs>
+      </svg>
+
       <div className="background__water" aria-hidden="true">
         <video
           className="background__video"
@@ -119,21 +176,17 @@ export default function Background({
         </ul>
       </nav>
 
-      {showDescription ? (
-        <section className="self-description" aria-labelledby="about-heading">
-          <p className="self-description__eyebrow">About me</p>
-          <h1 id="about-heading">A student of mathematics</h1>
+      <section className="self-description" aria-labelledby="about-heading">
+        <div className="self-description__inner">
+          <p className="self-description__eyebrow">{content.eyebrow}</p>
+          <h1 id="about-heading">{content.title}</h1>
           <div className="self-description__body">
-            <p>
-              I am interested in algebraic geometry and arithmetic geometry.
-            </p>
-            <p>
-              My current work explores étale cohomology and the cohomological
-              structures behind exponential sums.
-            </p>
+            {content.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
-        </section>
-      ) : null}
+        </div>
+      </section>
 
     </main>
   );

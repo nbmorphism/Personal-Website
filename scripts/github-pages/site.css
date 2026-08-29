@@ -37,6 +37,13 @@ body {
   background: #ffffff;
 }
 
+.boundary-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .background__water {
   position: absolute;
   inset: 0;
@@ -59,7 +66,7 @@ body {
   z-index: 2;
   top: 50%;
   left: clamp(1.5rem, 4vw, 5rem);
-  width: min(29vw, 34rem);
+  width: min(34vw, 42rem);
   color: var(--ink);
   transform: translateY(-50%);
 }
@@ -92,7 +99,7 @@ body {
   min-height: 1.1em;
   padding: 0.08em 0.4em 0.1em;
   color: var(--ink);
-  font-size: clamp(1.45rem, 2.45vw, 3rem);
+  font-size: clamp(1.75rem, 3.15vw, 3.8rem);
   font-style: normal;
   font-weight: 400;
   line-height: 0.92;
@@ -171,11 +178,14 @@ body {
   height: min(48vh, 32rem);
   flex-direction: column;
   justify-content: center;
-  padding-left: clamp(1rem, 1.8vw, 2rem);
-  border-left: 0.16rem solid rgba(255, 255, 255, 0.78);
   color: #ffffff;
   text-shadow: 0 0.08em 0.3em rgba(0, 25, 95, 0.4);
   transform: translateY(-50%) rotate(-0.7deg);
+}
+
+.self-description__inner {
+  padding-left: clamp(1rem, 1.8vw, 2rem);
+  border-left: 0.16rem solid rgba(255, 255, 255, 0.78);
 }
 
 .self-description__eyebrow {
@@ -306,7 +316,7 @@ body {
   }
 
   .page-menu__link {
-    font-size: clamp(1.05rem, 4vw, 2rem);
+    font-size: clamp(1.35rem, 4.5vw, 2.4rem);
   }
 
   .self-description {
@@ -342,22 +352,10 @@ body {
   }
 
   .background__water {
-    top: calc(var(--mobile-menu-height) - clamp(3rem, 10vw, 5rem));
+    top: calc(var(--mobile-menu-height) - clamp(7rem, 20vw, 10rem));
     bottom: 0;
     overflow: hidden;
     background: var(--water-accent);
-    -webkit-clip-path: polygon(
-      0 clamp(5rem, 16vw, 8rem),
-      100% 0,
-      100% 100%,
-      0 100%
-    );
-    clip-path: polygon(
-      0 clamp(5rem, 16vw, 8rem),
-      100% 0,
-      100% 100%,
-      0 100%
-    );
   }
 
   .background__video {
@@ -377,6 +375,8 @@ body {
     padding: clamp(3rem, 10vw, 5rem) 1.25rem;
     transform: none;
     background: #ffffff;
+    -webkit-clip-path: url("#mobile-white-boundary");
+    clip-path: url("#mobile-white-boundary");
   }
 
   .page-menu__list {
@@ -393,7 +393,7 @@ body {
     justify-content: center;
     padding-right: 0.25em;
     padding-left: 0.25em;
-    font-size: clamp(1.35rem, 7vw, 2.25rem);
+    font-size: clamp(1.55rem, 8vw, 2.6rem);
   }
 
   .self-description {
@@ -406,11 +406,9 @@ body {
     height: auto;
     margin: 0 auto;
     justify-content: center;
-    padding: clamp(5rem, 16vw, 8rem) 0
-      clamp(3rem, 10vw, 5rem) clamp(1rem, 4vw, 1.5rem);
+    padding: clamp(5rem, 16vw, 8rem) 0 clamp(3rem, 10vw, 5rem);
     transform: none;
-    border-top: 0;
-    border-left: 0.16rem solid rgba(255, 255, 255, 0.78);
+    border: 0;
     text-align: left;
   }
 
