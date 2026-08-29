@@ -1,5 +1,6 @@
 const pageContent = {
   "": {
+    layout: "home",
     eyebrow: "About me",
     title: "A student of mathematics",
     paragraphs: [
@@ -7,53 +8,52 @@ const pageContent = {
       "My current work explores étale cohomology and the cohomological structures behind exponential sums.",
     ],
   },
-  "research-interests": {
-    eyebrow: "Research",
-    title: "Research Interests",
-    paragraphs: [
-      "My interests lie in algebraic geometry and arithmetic geometry.",
-      "I am currently studying étale cohomology, exponential sums, and the geometry of twisted Kloosterman moments.",
-    ],
-  },
   publications: {
-    eyebrow: "Writing",
+    layout: "catalogue",
+    eyebrow: "Selected writing",
     title: "Publications",
-    paragraphs: [
-      "Research papers and related writing will be collected on this page.",
-      "Full bibliographic details and links will be added as the work becomes available.",
+    intro: "A developing catalogue of research and mathematical writing.",
+    entries: [
+      { label: "Research papers", text: "Original articles and preprints will be indexed here." },
+      { label: "Expository writing", text: "Longer notes that develop ideas beyond a seminar or lecture." },
     ],
   },
   "notes-talks": {
-    eyebrow: "Exposition",
+    layout: "index",
+    eyebrow: "Archive",
     title: "Notes & Talks",
-    paragraphs: [
-      "Expository notes, seminar materials, and slides will be collected here.",
-      "Each entry will include a short description and a link to the corresponding file.",
+    intro: "Working notes, seminar material, and slides—kept in one quiet index.",
+    entries: [
+      { label: "Notes", text: "Reading notes and short mathematical expositions." },
+      { label: "Talks", text: "Slides, abstracts, and material prepared for seminars." },
     ],
   },
   personae: {
+    layout: "personae",
     eyebrow: "Personae",
     title: "People & Perspectives",
-    paragraphs: [
-      "This page is reserved for the people, voices, and mathematical perspectives that shape my work.",
-      "Profiles and related reflections will be added here.",
+    intro: "A small archive of the people, places, and ideas behind the mathematics.",
+    entries: [
+      { label: "People", text: "Profiles and conversations that have shaped how I think." },
+      { label: "Perspectives", text: "Reflections on mathematical taste, practice, and discovery." },
     ],
   },
   cv: {
+    layout: "timeline",
     eyebrow: "Curriculum Vitae",
     title: "CV",
-    paragraphs: [
-      "Education, research experience, teaching, and academic activities will be presented here.",
-      "A downloadable curriculum vitae will be added when the details are ready.",
+    intro: "A concise record of study, research, teaching, and academic activity.",
+    entries: [
+      { label: "Education", text: "Academic history and current study." },
+      { label: "Research", text: "Projects, interests, and experience." },
+      { label: "Activities", text: "Teaching, seminars, and talks." },
     ],
   },
 };
 
 const transition = document.querySelector(".page-transition");
 const description = document.querySelector(".self-description");
-const eyebrow = description.querySelector(".self-description__eyebrow");
-const heading = description.querySelector("h1");
-const body = description.querySelector(".self-description__body");
+const inner = description.querySelector(".self-description__inner");
 const links = [...document.querySelectorAll(".page-menu__link")];
 const lines = document.querySelector(".page-transition__lines");
 let transitioning = false;
@@ -82,18 +82,69 @@ function routeFromLocation() {
   return path === base ? "" : path.slice(base.length).replace(/^\/|\/$/g, "");
 }
 
+function makeHeader(content) {
+  const header = document.createElement("header");
+  header.className = "page-content__header";
+
+  const eyebrow = document.createElement("p");
+  eyebrow.className = "self-description__eyebrow";
+  eyebrow.textContent = content.eyebrow;
+
+  const heading = document.createElement("h1");
+  heading.id = "page-heading";
+  heading.textContent = content.title;
+
+  header.append(eyebrow, heading);
+
+  if (content.layout !== "home") {
+    const intro = document.createElement("p");
+    intro.className = "page-content__intro";
+    intro.textContent = content.intro;
+    header.append(intro);
+  }
+
+  return header;
+}
+
 function renderRoute(route) {
   const content = pageContent[route] ?? pageContent[""];
   document.body.dataset.route = route;
-  eyebrow.textContent = content.eyebrow;
-  heading.textContent = content.title;
-  body.replaceChildren(
-    ...content.paragraphs.map((text) => {
+  description.className = `self-description self-description--${content.layout}`;
+
+  const header = makeHeader(content);
+
+  if (content.layout === "home") {
+    const body = document.createElement("div");
+    body.className = "self-description__body";
+    for (const text of content.paragraphs) {
       const paragraph = document.createElement("p");
       paragraph.textContent = text;
-      return paragraph;
-    }),
-  );
+      body.append(paragraph);
+    }
+    inner.replaceChildren(header, body);
+  } else {
+    const entries = document.createElement("div");
+    entries.className = "page-content__entries";
+    content.entries.forEach((entry, index) => {
+      const article = document.createElement("article");
+      article.className = "page-content__entry";
+
+      const number = document.createElement("span");
+      number.className = "page-content__number";
+      number.setAttribute("aria-hidden", "true");
+      number.textContent = String(index + 1).padStart(2, "0");
+
+      const title = document.createElement("h2");
+      title.textContent = entry.label;
+
+      const text = document.createElement("p");
+      text.textContent = entry.text;
+
+      article.append(number, title, text);
+      entries.append(article);
+    });
+    inner.replaceChildren(header, entries);
+  }
 
   for (const link of links) {
     link.toggleAttribute("aria-current", link.dataset.route === route);

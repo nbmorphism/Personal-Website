@@ -10,38 +10,32 @@ import { PAGE_TRANSITION_EVENT } from "./page-transition";
 const navigation = [
   { href: "/", label: "Home", angle: "-4deg", shift: "0rem", rise: "0rem" },
   {
-    href: "/research-interests",
-    label: "Research Interests",
-    angle: "2.8deg",
-    shift: "0.7rem",
-    rise: "0.24rem",
-  },
-  {
     href: "/publications",
     label: "Publications",
-    angle: "-2.5deg",
-    shift: "0.15rem",
-    rise: "-0.14rem",
+    angle: "2.2deg",
+    shift: "0.6rem",
+    rise: "0.15rem",
   },
   {
     href: "/notes-talks",
     label: "Notes & Talks",
-    angle: "3.6deg",
-    shift: "0.9rem",
-    rise: "0.24rem",
+    angle: "-2.8deg",
+    shift: "0.15rem",
+    rise: "0.06rem",
   },
   {
     href: "/personae",
     label: "Personae",
-    angle: "-3.1deg",
-    shift: "0.3rem",
-    rise: "-0.16rem",
+    angle: "3deg",
+    shift: "0.8rem",
+    rise: "0.12rem",
   },
-  { href: "/cv", label: "CV", angle: "-2deg", shift: "1.1rem", rise: "0rem" },
+  { href: "/cv", label: "CV", angle: "-2deg", shift: "0.35rem", rise: "0.08rem" },
 ] as const;
 
 const pageContent = {
   "/": {
+    layout: "home",
     eyebrow: "About me",
     title: "A student of mathematics",
     paragraphs: [
@@ -49,44 +43,63 @@ const pageContent = {
       "My current work explores étale cohomology and the cohomological structures behind exponential sums.",
     ],
   },
-  "/research-interests": {
-    eyebrow: "Research",
-    title: "Research Interests",
-    paragraphs: [
-      "My interests lie in algebraic geometry and arithmetic geometry.",
-      "I am currently studying étale cohomology, exponential sums, and the geometry of twisted Kloosterman moments.",
-    ],
-  },
   "/publications": {
-    eyebrow: "Writing",
+    layout: "catalogue",
+    eyebrow: "Selected writing",
     title: "Publications",
-    paragraphs: [
-      "Research papers and related writing will be collected on this page.",
-      "Full bibliographic details and links will be added as the work becomes available.",
+    intro: "A developing catalogue of research and mathematical writing.",
+    entries: [
+      {
+        label: "Research papers",
+        text: "Original articles and preprints will be indexed here.",
+      },
+      {
+        label: "Expository writing",
+        text: "Longer notes that develop ideas beyond a seminar or lecture.",
+      },
     ],
   },
   "/notes-talks": {
-    eyebrow: "Exposition",
+    layout: "index",
+    eyebrow: "Archive",
     title: "Notes & Talks",
-    paragraphs: [
-      "Expository notes, seminar materials, and slides will be collected here.",
-      "Each entry will include a short description and a link to the corresponding file.",
+    intro: "Working notes, seminar material, and slides—kept in one quiet index.",
+    entries: [
+      {
+        label: "Notes",
+        text: "Reading notes and short mathematical expositions.",
+      },
+      {
+        label: "Talks",
+        text: "Slides, abstracts, and material prepared for seminars.",
+      },
     ],
   },
   "/personae": {
+    layout: "personae",
     eyebrow: "Personae",
     title: "People & Perspectives",
-    paragraphs: [
-      "This page is reserved for the people, voices, and mathematical perspectives that shape my work.",
-      "Profiles and related reflections will be added here.",
+    intro: "A small archive of the people, places, and ideas behind the mathematics.",
+    entries: [
+      {
+        label: "People",
+        text: "Profiles and conversations that have shaped how I think.",
+      },
+      {
+        label: "Perspectives",
+        text: "Reflections on mathematical taste, practice, and discovery.",
+      },
     ],
   },
   "/cv": {
+    layout: "timeline",
     eyebrow: "Curriculum Vitae",
     title: "CV",
-    paragraphs: [
-      "Education, research experience, teaching, and academic activities will be presented here.",
-      "A downloadable curriculum vitae will be added when the details are ready.",
+    intro: "A concise record of study, research, teaching, and academic activity.",
+    entries: [
+      { label: "Education", text: "Academic history and current study." },
+      { label: "Research", text: "Projects, interests, and experience." },
+      { label: "Activities", text: "Teaching, seminars, and talks." },
     ],
   },
 } as const;
@@ -98,6 +111,7 @@ type BackgroundProps = {
 
 export default function Background({ activePath }: BackgroundProps) {
   const content = pageContent[activePath as keyof typeof pageContent] ?? pageContent["/"];
+
   const followLink = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (
       event.defaultPrevented ||
@@ -176,18 +190,40 @@ export default function Background({ activePath }: BackgroundProps) {
         </ul>
       </nav>
 
-      <section className="self-description" aria-labelledby="about-heading">
+      <section
+        className={"self-description self-description--" + content.layout}
+        aria-labelledby="page-heading"
+      >
         <div className="self-description__inner">
-          <p className="self-description__eyebrow">{content.eyebrow}</p>
-          <h1 id="about-heading">{content.title}</h1>
-          <div className="self-description__body">
-            {content.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
+          <header className="page-content__header">
+            <p className="self-description__eyebrow">{content.eyebrow}</p>
+            <h1 id="page-heading">{content.title}</h1>
+            {content.layout === "home" ? null : (
+              <p className="page-content__intro">{content.intro}</p>
+            )}
+          </header>
+
+          {content.layout === "home" ? (
+            <div className="self-description__body">
+              {content.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          ) : (
+            <div className="page-content__entries">
+              {content.entries.map((entry, index) => (
+                <article className="page-content__entry" key={entry.label}>
+                  <span className="page-content__number" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h2>{entry.label}</h2>
+                  <p>{entry.text}</p>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
-
     </main>
   );
 }

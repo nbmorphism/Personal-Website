@@ -13,34 +13,27 @@ const assetVersion = (process.env.GITHUB_SHA ?? "local").slice(0, 12);
 const routes = [
   { path: "", label: "Home", angle: "-4deg", shift: "0rem", rise: "0rem" },
   {
-    path: "research-interests",
-    label: "Research Interests",
-    angle: "2.8deg",
-    shift: "0.7rem",
-    rise: "0.24rem",
-  },
-  {
     path: "publications",
     label: "Publications",
-    angle: "-2.5deg",
-    shift: "0.15rem",
-    rise: "-0.14rem",
+    angle: "2.2deg",
+    shift: "0.6rem",
+    rise: "0.15rem",
   },
   {
     path: "notes-talks",
     label: "Notes & Talks",
-    angle: "3.6deg",
-    shift: "0.9rem",
-    rise: "0.24rem",
+    angle: "-2.8deg",
+    shift: "0.15rem",
+    rise: "0.06rem",
   },
   {
     path: "personae",
     label: "Personae",
-    angle: "-3.1deg",
-    shift: "0.3rem",
-    rise: "-0.16rem",
+    angle: "3deg",
+    shift: "0.8rem",
+    rise: "0.12rem",
   },
-  { path: "cv", label: "CV", angle: "-2deg", shift: "1.1rem", rise: "0rem" },
+  { path: "cv", label: "CV", angle: "-2deg", shift: "0.35rem", rise: "0.08rem" },
 ];
 
 const navigation = routes
@@ -88,10 +81,12 @@ const html = (route) => `<!doctype html>
         </ul>
       </nav>
 
-      <section class="self-description" aria-labelledby="about-heading">
+      <section class="self-description self-description--home" aria-labelledby="page-heading">
         <div class="self-description__inner">
-          <p class="self-description__eyebrow">About me</p>
-          <h1 id="about-heading">A student of mathematics</h1>
+          <header class="page-content__header">
+            <p class="self-description__eyebrow">About me</p>
+            <h1 id="page-heading">A student of mathematics</h1>
+          </header>
           <div class="self-description__body">
             <p>I am interested in algebraic geometry and arithmetic geometry.</p>
             <p>My current work explores étale cohomology and the cohomological structures behind exponential sums.</p>
