@@ -34,7 +34,7 @@ const navigation = [
 ] as const;
 
 const homeContent = {
-  eyebrow: "About me",
+  eyebrow: "An Introduction to",
   title: "Ting-Yueh Chang",
   paragraphs: [
     "I am a senior undergraduate student of mathematics at the National Taiwan University.",
