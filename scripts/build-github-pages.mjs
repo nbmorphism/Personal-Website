@@ -84,7 +84,7 @@ const html = (route) => `<!doctype html>
       <section class="self-description self-description--home"${route ? " hidden" : ""} aria-labelledby="page-heading">
         <div class="self-description__inner">
           <header class="page-content__header">
-            <p class="self-description__eyebrow">About me</p>
+            <p class="self-description__eyebrow">An Introduction to</p>
             <h1 id="page-heading">Ting-Yueh Chang</h1>
           </header>
           <div class="self-description__body">

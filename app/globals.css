@@ -206,7 +206,7 @@ body {
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .self-description h1 {
