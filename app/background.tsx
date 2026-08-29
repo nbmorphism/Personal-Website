@@ -37,10 +37,10 @@ const pageContent = {
   "/": {
     layout: "home",
     eyebrow: "About me",
-    title: "A student of mathematics",
+    title: "Ting-Yueh Chang",
     paragraphs: [
-      "I am interested in algebraic geometry and arithmetic geometry.",
-      "My current work explores étale cohomology and the cohomological structures behind exponential sums.",
+      "I am interested in number theory and arithmetic geometry.",
+      "My current work explores the geometric interpretations and the cohomological structures behind exponential sums.",
     ],
   },
   "/publications": {
