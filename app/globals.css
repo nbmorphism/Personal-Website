@@ -87,19 +87,19 @@ body {
 }
 
 .page-menu__item:nth-child(2) {
-  margin-top: clamp(-0.55rem, -0.6vw, -0.4rem);
+  margin-top: clamp(-0.75rem, -0.83vw, -0.6rem);
 }
 
 .page-menu__item:nth-child(3) {
-  margin-top: clamp(0.8rem, 1.15vw, 1rem);
+  margin-top: clamp(0.6rem, 0.92vw, 0.8rem);
 }
 
 .page-menu__item:nth-child(4) {
-  margin-top: clamp(-0.6rem, -0.66vw, -0.45rem);
+  margin-top: clamp(-0.8rem, -0.88vw, -0.65rem);
 }
 
 .page-menu__item:nth-child(5) {
-  margin-top: clamp(0.25rem, 0.36vw, 0.35rem);
+  margin-top: clamp(0.08rem, 0.13vw, 0.16rem);
 }
 
 .page-menu__link {
