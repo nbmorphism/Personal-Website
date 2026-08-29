@@ -76,7 +76,7 @@ body {
 
 .page-menu__item {
   position: relative;
-  margin-top: clamp(-0.62rem, -0.5vw, -0.24rem);
+  margin-top: clamp(-0.12rem, -0.08vw, -0.04rem);
   margin-left: var(--menu-shift);
   transform: translateY(calc(var(--menu-rise) * -1)) rotate(var(--menu-angle));
   transform-origin: left center;
