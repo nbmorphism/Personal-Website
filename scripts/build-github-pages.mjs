@@ -81,19 +81,30 @@ const html = (route) => `<!doctype html>
         </ul>
       </nav>
 
-      <section class="self-description self-description--home"${route ? " hidden" : ""} aria-labelledby="page-heading">
-        <div class="self-description__inner">
-          <header class="page-content__header">
-            <p class="self-description__eyebrow">An Introduction to</p>
-            <h1 id="page-heading">Ting-Yueh Chang</h1>
-          </header>
-          <div class="self-description__body">
-            <p>I am a senior undergraduate student of mathematics at the National Taiwan University.</p>
-            <p>I am interested in number theory, especially in arithmetic geometry.</p>
-            <p>My current work explores the geometric interpretations and the cohomological structures behind exponential sums.</p>
+      <div class="blue-content-scroll" data-blue-scroll>
+        <section class="blue-content-panel self-description self-description--home"${route ? " hidden" : ""} data-content-route="" aria-labelledby="page-heading">
+          <div class="self-description__inner">
+            <header class="page-content__header">
+              <p class="self-description__eyebrow">An Introduction to</p>
+              <h1 id="page-heading">Ting-Yueh Chang</h1>
+            </header>
+            <div class="self-description__body">
+              <p>I am a senior undergraduate student of mathematics at the National Taiwan University.</p>
+              <p>I am interested in number theory, especially in arithmetic geometry.</p>
+              <p>My current work explores the geometric interpretations and the cohomological structures behind exponential sums.</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section class="blue-content-panel publication-page"${route === "publications" ? "" : " hidden"} data-content-route="publications" aria-labelledby="publications-heading">
+          <div class="self-description__inner publication-page__inner">
+            <h1 id="publications-heading">Publications</h1>
+            <ul class="publication-page__list">
+              <li>Publications and preprints will be listed here.</li>
+            </ul>
+          </div>
+        </section>
+      </div>
     </main>
 
     <div class="page-transition" aria-hidden="true">

@@ -43,6 +43,10 @@ const homeContent = {
   ],
 } as const;
 
+const publicationItems = [
+  "Publications and preprints will be listed here.",
+] as const;
+
 type BackgroundProps = {
   activePath: string;
   showDescription?: boolean;
@@ -127,21 +131,42 @@ export default function Background({ activePath }: BackgroundProps) {
         </ul>
       </nav>
 
-      {activePath === "/" ? (
-        <section className="self-description self-description--home" aria-labelledby="page-heading">
-          <div className="self-description__inner">
-            <header className="page-content__header">
-              <p className="self-description__eyebrow">{homeContent.eyebrow}</p>
-              <h1 id="page-heading">{homeContent.title}</h1>
-            </header>
-            <div className="self-description__body">
-              {homeContent.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+      <div className="blue-content-scroll" data-blue-scroll>
+        {activePath === "/" ? (
+          <section
+            className="blue-content-panel self-description self-description--home"
+            aria-labelledby="page-heading"
+          >
+            <div className="self-description__inner">
+              <header className="page-content__header">
+                <p className="self-description__eyebrow">{homeContent.eyebrow}</p>
+                <h1 id="page-heading">{homeContent.title}</h1>
+              </header>
+              <div className="self-description__body">
+                {homeContent.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      ) : null}
+          </section>
+        ) : null}
+
+        {activePath === "/publications" ? (
+          <section
+            className="blue-content-panel publication-page"
+            aria-labelledby="publications-heading"
+          >
+            <div className="self-description__inner publication-page__inner">
+              <h1 id="publications-heading">Publications</h1>
+              <ul className="publication-page__list">
+                {publicationItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        ) : null}
+      </div>
     </main>
   );
 }

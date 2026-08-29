@@ -1,5 +1,6 @@
 const transition = document.querySelector(".page-transition");
-const description = document.querySelector(".self-description");
+const contentArea = document.querySelector("[data-blue-scroll]");
+const contentPanels = [...document.querySelectorAll("[data-content-route]")];
 const links = [...document.querySelectorAll(".page-menu__link")];
 const lines = document.querySelector(".page-transition__lines");
 let transitioning = false;
@@ -30,7 +31,11 @@ function routeFromLocation() {
 
 function renderRoute(route) {
   document.body.dataset.route = route;
-  description.hidden = route !== "";
+  contentArea.scrollTop = 0;
+
+  for (const panel of contentPanels) {
+    panel.hidden = panel.dataset.contentRoute !== route;
+  }
 
   for (const link of links) {
     link.toggleAttribute("aria-current", link.dataset.route === route);
