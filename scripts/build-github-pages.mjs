@@ -81,15 +81,16 @@ const html = (route) => `<!doctype html>
         </ul>
       </nav>
 
-      <section class="self-description self-description--home" aria-labelledby="page-heading">
+      <section class="self-description self-description--home"${route ? " hidden" : ""} aria-labelledby="page-heading">
         <div class="self-description__inner">
           <header class="page-content__header">
             <p class="self-description__eyebrow">About me</p>
-            <h1 id="page-heading">A student of mathematics</h1>
+            <h1 id="page-heading">Ting-Yueh Chang</h1>
           </header>
           <div class="self-description__body">
-            <p>I am interested in algebraic geometry and arithmetic geometry.</p>
-            <p>My current work explores étale cohomology and the cohomological structures behind exponential sums.</p>
+            <p>I am a senior undergraduate student of mathematics at the National Taiwan University.</p>
+            <p>I am interested in number theory, especially in arithmetic geometry.</p>
+            <p>My current work explores the geometric interpretations and the cohomological structures behind exponential sums.</p>
           </div>
         </div>
       </section>

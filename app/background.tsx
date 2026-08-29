@@ -33,76 +33,14 @@ const navigation = [
   { href: "/cv", label: "CV", angle: "-2deg", shift: "0.35rem", rise: "0.08rem" },
 ] as const;
 
-const pageContent = {
-  "/": {
-    layout: "home",
-    eyebrow: "About me",
-    title: "Ting-Yueh Chang",
-    paragraphs: [
-      "I am a senior undergraduate student of mathematics at the National Taiwan University.",
-      "I am interested in number theory, especially in arithmetic geometry.",
-      "My current work explores the geometric interpretations and the cohomological structures behind exponential sums.",
-    ],
-  },
-  "/publications": {
-    layout: "catalogue",
-    eyebrow: "Selected writing",
-    title: "Publications",
-    intro: "A developing catalogue of research and mathematical writing.",
-    entries: [
-      {
-        label: "Research papers",
-        text: "Original articles and preprints will be indexed here.",
-      },
-      {
-        label: "Expository writing",
-        text: "Longer notes that develop ideas beyond a seminar or lecture.",
-      },
-    ],
-  },
-  "/notes-talks": {
-    layout: "index",
-    eyebrow: "Archive",
-    title: "Notes & Talks",
-    intro: "Working notes, seminar material, and slides—kept in one quiet index.",
-    entries: [
-      {
-        label: "Notes",
-        text: "Reading notes and short mathematical expositions.",
-      },
-      {
-        label: "Talks",
-        text: "Slides, abstracts, and material prepared for seminars.",
-      },
-    ],
-  },
-  "/personae": {
-    layout: "personae",
-    eyebrow: "Personae",
-    title: "People & Perspectives",
-    intro: "A small archive of the people, places, and ideas behind the mathematics.",
-    entries: [
-      {
-        label: "People",
-        text: "Profiles and conversations that have shaped how I think.",
-      },
-      {
-        label: "Perspectives",
-        text: "Reflections on mathematical taste, practice, and discovery.",
-      },
-    ],
-  },
-  "/cv": {
-    layout: "timeline",
-    eyebrow: "Curriculum Vitae",
-    title: "CV",
-    intro: "A concise record of study, research, teaching, and academic activity.",
-    entries: [
-      { label: "Education", text: "Academic history and current study." },
-      { label: "Research", text: "Projects, interests, and experience." },
-      { label: "Activities", text: "Teaching, seminars, and talks." },
-    ],
-  },
+const homeContent = {
+  eyebrow: "About me",
+  title: "Ting-Yueh Chang",
+  paragraphs: [
+    "I am a senior undergraduate student of mathematics at the National Taiwan University.",
+    "I am interested in number theory, especially in arithmetic geometry.",
+    "My current work explores the geometric interpretations and the cohomological structures behind exponential sums.",
+  ],
 } as const;
 
 type BackgroundProps = {
@@ -111,8 +49,6 @@ type BackgroundProps = {
 };
 
 export default function Background({ activePath }: BackgroundProps) {
-  const content = pageContent[activePath as keyof typeof pageContent] ?? pageContent["/"];
-
   const followLink = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (
       event.defaultPrevented ||
@@ -191,40 +127,21 @@ export default function Background({ activePath }: BackgroundProps) {
         </ul>
       </nav>
 
-      <section
-        className={"self-description self-description--" + content.layout}
-        aria-labelledby="page-heading"
-      >
-        <div className="self-description__inner">
-          <header className="page-content__header">
-            <p className="self-description__eyebrow">{content.eyebrow}</p>
-            <h1 id="page-heading">{content.title}</h1>
-            {content.layout === "home" ? null : (
-              <p className="page-content__intro">{content.intro}</p>
-            )}
-          </header>
-
-          {content.layout === "home" ? (
+      {activePath === "/" ? (
+        <section className="self-description self-description--home" aria-labelledby="page-heading">
+          <div className="self-description__inner">
+            <header className="page-content__header">
+              <p className="self-description__eyebrow">{homeContent.eyebrow}</p>
+              <h1 id="page-heading">{homeContent.title}</h1>
+            </header>
             <div className="self-description__body">
-              {content.paragraphs.map((paragraph) => (
+              {homeContent.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-          ) : (
-            <div className="page-content__entries">
-              {content.entries.map((entry, index) => (
-                <article className="page-content__entry" key={entry.label}>
-                  <span className="page-content__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h2>{entry.label}</h2>
-                  <p>{entry.text}</p>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 }
