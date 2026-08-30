@@ -98,9 +98,18 @@ const html = (route) => `<!doctype html>
 
         <section class="blue-content-panel publication-page"${route === "publications" ? "" : " hidden"} data-content-route="publications" aria-labelledby="publications-heading">
           <div class="self-description__inner publication-page__inner">
-            <h1 id="publications-heading">Publications</h1>
+            <h1 id="publications-heading">Publications &amp; Preprints</h1>
             <ul class="publication-page__list">
               <li>Publications and preprints will be listed here.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="blue-content-panel publication-page"${route === "notes-talks" ? "" : " hidden"} data-content-route="notes-talks" aria-labelledby="notes-talks-heading">
+          <div class="self-description__inner publication-page__inner">
+            <h1 id="notes-talks-heading">Notes &amp; Talks</h1>
+            <ul class="publication-page__list">
+              <li>Notes and talks will be listed here.</li>
             </ul>
           </div>
         </section>

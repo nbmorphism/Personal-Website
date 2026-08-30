@@ -47,6 +47,10 @@ const publicationItems = [
   "Publications and preprints will be listed here.",
 ] as const;
 
+const notesTalksItems = [
+  "Notes and talks will be listed here.",
+] as const;
+
 type BackgroundProps = {
   activePath: string;
   showDescription?: boolean;
@@ -157,9 +161,25 @@ export default function Background({ activePath }: BackgroundProps) {
             aria-labelledby="publications-heading"
           >
             <div className="self-description__inner publication-page__inner">
-              <h1 id="publications-heading">Publications</h1>
+              <h1 id="publications-heading">Publications &amp; Preprints</h1>
               <ul className="publication-page__list">
                 {publicationItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        ) : null}
+
+        {activePath === "/notes-talks" ? (
+          <section
+            className="blue-content-panel publication-page"
+            aria-labelledby="notes-talks-heading"
+          >
+            <div className="self-description__inner publication-page__inner">
+              <h1 id="notes-talks-heading">Notes &amp; Talks</h1>
+              <ul className="publication-page__list">
+                {notesTalksItems.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
