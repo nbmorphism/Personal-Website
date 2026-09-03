@@ -89,9 +89,9 @@ const html = (route) => `<!doctype html>
               <h1 id="page-heading">Ting-Yueh Chang</h1>
             </header>
             <div class="self-description__body">
-              <p>I am a senior undergraduate student of mathematics at the National Taiwan University.</p>
-              <p>I am interested in number theory, especially in arithmetic geometry.</p>
-              <p>My current work explores the geometric interpretations and the cohomological structures behind exponential sums.</p>
+              <p>I am a senior undergraduate student of mathematics at National Taiwan University.</p>
+              <p>I am interested in number theory, particularly in arithmetic geometry.</p>
+              <p>My current work explores the geometry and the cohomological structures behind exponential sums.</p>
             </div>
           </div>
         </section>
