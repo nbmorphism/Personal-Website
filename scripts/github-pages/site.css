@@ -522,6 +522,8 @@ body {
 
   .background__video {
     object-position: 100% center;
+    transform: scale(1.12);
+    transform-origin: right center;
   }
 
   .page-menu {
@@ -551,7 +553,11 @@ body {
   }
 
   .page-menu__item:nth-child(n + 2) {
-    margin-top: clamp(-0.75rem, -2.2vw, -0.5rem);
+    margin-top: clamp(-0.08rem, -0.2vw, 0rem);
+  }
+
+  .page-menu__item:nth-child(3) {
+    margin-top: clamp(0.4rem, 1.8vw, 0.55rem);
   }
 
   .page-menu__link {
