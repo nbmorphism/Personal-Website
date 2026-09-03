@@ -37,9 +37,9 @@ const homeContent = {
   eyebrow: "An Introduction to",
   title: "Ting-Yueh Chang",
   paragraphs: [
-    "I am a senior undergraduate student of mathematics at the National Taiwan University.",
-    "I am interested in number theory, especially in arithmetic geometry.",
-    "My current work explores the geometric interpretations and the cohomological structures behind exponential sums.",
+    "I am a senior undergraduate student of mathematics at National Taiwan University.",
+    "I am interested in number theory, particularly in arithmetic geometry.",
+    "My current work explores the geometry and the cohomological structures behind exponential sums.",
   ],
 } as const;
 
