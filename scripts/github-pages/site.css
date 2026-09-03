@@ -97,7 +97,7 @@ body {
 }
 
 .page-menu__item:nth-child(3) {
-  margin-top: clamp(-0.95rem, -1.05vw, -0.8rem);
+  margin-top: clamp(0.1rem, 0.2vw, 0.2rem);
 }
 
 .page-menu__item:nth-child(4) {
